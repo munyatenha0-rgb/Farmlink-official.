@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self'; script-src 'self'; connect-src 'none'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Admin Sign In — FarmLink</title>
+<meta name="description" content="FarmLink administrator access. Manage products, farmer stores, orders and site settings.">
+<link rel="canonical" href="https://farmlink.co.zw/admin.html">
+<meta name="robots" content="noindex,nofollow">
+<meta property="og:site_name" content="FarmLink">
+<meta property="og:title" content="Admin — FarmLink">
+<meta property="og:url" content="https://farmlink.co.zw/admin.html">
+<meta property="og:image" content="https://farmlink.co.zw/assets/img/og-image.jpg">
+<meta name="theme-color" content="#2d7a3e">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+<link rel="manifest" href="site.webmanifest">
+<link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to main content</a>
+<div class="progress-bar" id="progressBar" aria-hidden="true"></div>
+
+<header class="app-header">
+  <div class="header-inner">
+    <a class="logo" href="index.html"><svg class="logo-icon" viewBox="0 0 24 24" fill="#ffffff" aria-hidden="true"><path d="M12 21c-4.4 0-8-3.6-8-8 0-5 4-9.5 8-11 4 1.5 8 6 8 11 0 4.4-3.6 8-8 8zm0-2c3.3 0 6-2.7 6-6 0-3.8-2.9-7.4-6-8.8C8.9 5.6 6 9.2 6 13c0 3.3 2.7 6 6 6z"/></svg>FarmLink</a>
+    <div class="header-actions"><a class="admin-link" href="index.html">Back to site</a></div>
+  </div>
+</header>
+
+<main class="container section" id="main">
+  <div class="login-card" id="loginForm">
+    <h1 class="detail-title" style="font-size:20px">Administrator sign in</h1>
+    <p style="font-size:13px;color:var(--secondary);margin:6px 0 16px">Demo access — <strong>admin@farmlink.co.zw</strong> / <strong>FarmLink2026!</strong> (change these in <code>assets/js/app.js</code> before launch).</p>
+    <div id="loginMsg"></div>
+    <form novalidate>
+      <div class="form-group">
+        <label for="adEmail">Email</label>
+        <input id="adEmail" type="email" autocomplete="username" maxlength="120" required>
+      </div>
+      <div class="form-group">
+        <label for="adPass">Password</label>
+        <input id="adPass" type="password" autocomplete="current-password" maxlength="120" required>
+        <button type="button" class="mini-btn" id="pwToggle" style="margin-top:6px" aria-pressed="false">Show password</button>
+      </div>
+      <button type="submit" class="btn btn-primary btn-block">Sign in</button>
+      <p class="summary-note">Five failed attempts lock sign-in for 60 seconds.</p>
+    </form>
+  </div>
+
+  <div id="adminDash" style="display:none">
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:16px">
+      <h2 class="page-title">Admin dashboard</h2>
+      <div>
+        <button type="button" class="mini-btn" id="resetBtn">Reset demo data</button>
+        <button type="button" class="mini-btn danger" id="logoutBtn">Log out</button>
+      </div>
+    </div>
+
+    <div class="stat-grid" id="statGrid"></div>
+
+    <div class="admin-tabs">
+      <button type="button" class="admin-tab active" data-panel="panelProducts">Products</button>
+      <button type="button" class="admin-tab" data-panel="panelStores">Stores &amp; applications</button>
+      <button type="button" class="admin-tab" data-panel="panelOrders">Orders</button>
+      <button type="button" class="admin-tab" data-panel="panelSettings">Site settings</button>
+    </div>
+
+    <div class="admin-panel active" id="panelProducts">
+      <h2 class="section-title" id="productFormTitle" style="font-size:17px">Add new product</h2>
+      <form id="productForm" style="max-width:640px;margin-bottom:24px" novalidate>
+        <input type="hidden" id="pfId">
+        <div class="form-row">
+          <div class="form-group"><label for="pfName">Product name</label><input id="pfName" type="text" maxlength="80" required></div>
+          <div class="form-group"><label for="pfStore">Store</label><select id="pfStore"></select></div>
+        </div>
+        <div class="form-row">
+          <div class="form-group"><label for="pfPrice">Price (USD)</label><input id="pfPrice" type="number" min="1" step="1" required></div>
+          <div class="form-group"><label for="pfUnit">Unit</label><input id="pfUnit" type="text" maxlength="20" placeholder="crate / bucket / bunch / kg"></div>
+        </div>
+        <div class="form-row">
+          <div class="form-group"><label for="pfStock">Stock available</label><input id="pfStock" type="number" min="0" step="1"></div>
+          <div class="form-group"><label for="pfHarvest">Harvested</label><input id="pfHarvest" type="text" maxlength="20" placeholder="Today"></div>
+        </div>
+        <div class="form-group"><label for="pfAlt">Image alt text</label><input id="pfAlt" type="text" maxlength="200"></div>
+        <div class="form-group"><label for="pfDesc">Description</label><textarea id="pfDesc" rows="2" maxlength="400"></textarea></div>
+        <button type="submit" class="btn btn-primary">Save product</button>
+      </form>
+      <div class="table-scroll">
+        <table class="admin-table">
+          <thead><tr><th></th><th>Name</th><th>Store</th><th>Price</th><th>Stock</th><th>Actions</th></tr></thead>
+          <tbody id="productRows"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="admin-panel" id="panelStores">
+      <h2 class="section-title" style="font-size:17px">Verified stores</h2>
+      <div class="table-scroll">
+        <table class="admin-table">
+          <thead><tr><th></th><th>Store</th><th>Farmer</th><th>Location</th><th>Since</th><th></th></tr></thead>
+          <tbody id="storeRows"></tbody>
+        </table>
+      </div>
+      <h2 class="section-title" style="font-size:17px;margin-top:20px">Pending farmer applications</h2>
+      <div class="table-scroll">
+        <table class="admin-table">
+          <thead><tr><th>Store</th><th>Farmer</th><th>Location</th><th>Phone</th><th>Actions</th></tr></thead>
+          <tbody id="pendingRows"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="admin-panel" id="panelOrders">
+      <div class="table-scroll">
+        <table class="admin-table">
+          <thead><tr><th>Order</th><th>Customer</th><th>Total</th><th>Payout</th><th>Method</th><th>Status</th></tr></thead>
+          <tbody id="orderRows"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="admin-panel" id="panelSettings">
+      <div id="settingsMsg"></div>
+      <form id="settingsForm" style="max-width:420px" novalidate>
+        <div class="form-row">
+          <div class="form-group"><label for="setCheckpoint">Checkpoint delivery fee ($)</label><input id="setCheckpoint" type="number" min="0" step="1"></div>
+          <div class="form-group"><label for="setHome">Home delivery fee ($)</label><input id="setHome" type="number" min="0" step="1"></div>
+        </div>
+        <div class="form-group"><label for="setCommission">FarmLink service fee (% of produce value)</label><input id="setCommission" type="number" min="0" max="50" step="1"></div>
+        <div class="form-group"><label for="setPhone">Contact phone</label><input id="setPhone" type="text" maxlength="30"></div>
+        <div class="form-group"><label for="setEmail">Contact email</label><input id="setEmail" type="email" maxlength="120"></div>
+        <button type="submit" class="btn btn-primary">Save settings</button>
+      </form>
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div><h4>FarmLink</h4><p style="font-size:13px;max-width:280px">Connecting Zimbabwean farmers straight to the market.</p></div>
+    <div><h4>Shop</h4><a href="market.html">Fresh produce</a><a href="stores.html">Farmer stores</a><a href="cart.html">Your cart</a><a href="orders.html">Your orders</a></div>
+    <div><h4>Services</h4><a href="pricing.html">Pricing</a><a href="farm-logistics.html">Farm logistics</a><a href="wholesale.html">Wholesale supply</a><a href="case-studies.html">Case studies</a><a href="about.html">About us</a><a href="blog.html">Blog</a></div><div><h4>Sell</h4><a href="farmer-signup.html">Open a farm store</a><a href="index.html#how-it-works">How it works</a></div>
+    <div><h4>Contact</h4><a href="tel:+263773123456">+263 773 123 456</a><a href="mailto:hello@farmlink.co.zw">hello@farmlink.co.zw</a><a href="contact.html">Send an inquiry</a></div>
+  </div>
+  <div style="grid-column:1/-1;display:flex;gap:16px;align-items:center;flex-wrap:wrap;font-size:13px;color:#bbb;padding-top:6px"><span>Share FarmLink:</span><a style="display:inline;padding:0" href="https://wa.me/?text=FarmLink%20%E2%80%94%20fresh%20from%20Zimbabwean%20farms%2C%20delivered%20in%20Harare%3A%20https%3A%2F%2Ffarmlink.co.zw" target="_blank" rel="noopener">WhatsApp</a><a style="display:inline;padding:0" href="https://twitter.com/intent/tweet?url=https%3A%2F%2Ffarmlink.co.zw&amp;text=FarmLink%20%E2%80%94%20fresh%20from%20Zimbabwean%20farms" target="_blank" rel="noopener">X</a><a style="display:inline;padding:0" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Ffarmlink.co.zw" target="_blank" rel="noopener">Facebook</a></div>
+  <div class="footer-bottom">© 2026 FarmLink · Harare, Zimbabwe · <a href="privacy.html">Privacy policy</a> · <a href="terms.html">Terms and conditions</a></div>
+</footer>
+<script src="assets/js/app.js" defer></script>
+<script src="assets/js/site.js" defer></script>
+</body>
+</html>

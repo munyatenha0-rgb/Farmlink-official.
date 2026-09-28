@@ -1,0 +1,11 @@
+# FarmLink
+FarmLink is a farm-to-market platform in Harare, Zimbabwe connecting smallholder farmers directly with buyers.
+Farmers open free online stores and list produce; FarmLink verifies farms, collects produce, handles transport
+and processes payments (EcoCash, OneMoney, bank transfer). Buyers choose checkpoint pickup ($3) or home delivery ($5).
+FarmLink deducts a 10% service fee on produce; farmers receive 90% after delivery is confirmed.
+Key pages: / (home), /market.html (produce), /stores.html (farmer stores), /farmer-signup.html (farmers apply),
+/pricing.html (fees for buyers and farmers), /farm-logistics.html (collection routes and checkpoints),
+/wholesale.html (standing weekly orders for retailers and kitchens), /case-studies.html (pilot results),
+/about.html (story, team and guarantee), /blog.html (5 produce guides), /contact.html (inquiry form, replies within 1 business day),
+/privacy.html, /terms.html. Opening hours: Mon–Sat 8am–5pm.
+Technical: static site, no tracking cookies, no third-party scripts, HTTPS with strict security headers.
